@@ -1,40 +1,32 @@
 <?php
 
 namespace Modules\Orders\app\Events;
-
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Modules\Auth\app\Models\User;
 
 class OrderNotifyEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-
-
-    public User $user;
     public \stdClass $details;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($details, $user)
+    public function __construct($details)
     {
         $this->details = (object)$details;
-        $this->user = $user;
     }
 
     /**
      * Get the channels the event should be broadcast on.
      *
-     * @return PrivateChannel
+     * @return array
      */
-    public function broadcastOn(): PrivateChannel
+    public function broadcastOn(): array
     {
-        return new PrivateChannel('notifications.1');
+        return ['notifications'];
     }
 
     public function broadcastAs(): string

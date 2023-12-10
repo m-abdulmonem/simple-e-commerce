@@ -1,51 +1,59 @@
+
+
+// import { createApp } from 'vue';
+
+// const app = createApp({});
+//
+// import ExampleComponent from './components/ExampleComponent.vue';
+// app.component('example-component', ExampleComponent);
+
+// // Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
+// //     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
+// // });
+
+// app.mount('#app');
 import './bootstrap';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { createRouter, createWebHistory } from 'vue-router';
+import Routes from './routers/routes.js';
+import App from './App.vue';
+import { useAuthUserStore } from './stores/AuthUserStore';
 
+const pinia = createPinia();
+const app = createApp(App);
 
-import {createApp} from 'vue/dist/vue.esm-bundler';
-import ChatMessages from './components/ChatMessages.vue';
-import ChatForm from './components/ChatForm.vue';
-import UsersList from './components/UsersList.vue';
-import ChatClone from './components/ChatClone.vue';
-import Filter from 'bad-words';
+const router = createRouter({
+    routes: Routes,
+    history: createWebHistory(),
+});
 
+router.beforeEach(async (to, from, next) => {
+    const authUserStore = useAuthUserStore();
+    if (to.matched.some(record => record.meta.requiresAuth)) {
 
-const app = createApp({
-    components: {
-        ChatMessages,
-        ChatForm,
-        UsersList,
-        ChatClone
-    },
-    data() {
-        let messages;
-        return { messages}
-    },
-    created() {
-        this.fetchMessages();
-    },
-    methods: {
-        fetchMessages() {
-            axios.get('/messages').then(response => {
-                this.auth = response.data.auth;
-                this.messages = response.data;
-            });
-
-            window.Echo.private('chat')
-                .listen('MessageSent', (e) => {
-                    let a = this.messages.push({
-                        message: e.message.message,
-                        user: e.user
-                    });
-                });
-        },
-        addMessage(message) {
-            const filter = new Filter();
-            message.message = filter.clean(message.message)
-            this.messages.push(message);
-
-            axios.post('/messages', message).then(response => {
-                //response.data
-            });
+        if (!authUserStore.user.token) {
+            next({ name: 'admin.login' })
+        } else {
+            next()
         }
+    } else {
+        next()
     }
-}).mount("#app");
+})
+//
+// import SocketIO from 'vue-socket.io'
+// import { io } from 'socket.io-client'
+
+// const socket = io('http://localhost:3000',{
+//     rejectUnauthorized: false
+// })
+// socket.on('notifications', (notif) => {
+//     console.log(notif)
+// });
+// app.use(new SocketIO({
+//     connection: 'https://localhost:9001' //options object is Optional
+// }));
+app.use(pinia);
+app.use(router);
+app.mount('#app');

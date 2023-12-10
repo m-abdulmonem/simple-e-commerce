@@ -16,14 +16,19 @@ class OrdersController extends Controller
     /**
      * get order for admin
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return json(
-            new OrderResource(Order::query()->latest()->orderBy("status", 'desc')->get()),
-            message: __('Load Orders Successfully')
-        );
+        $orders = Order::with(['user','cart.items.product'])
+            ->latest()
+            ->orderBy("status", 'desc')
+            ->paginate(10);
+
+        return OrderResource::collection($orders)->additional([
+            'msg' => __('Retrieve 10 Orders'),
+            'status' => 'success'
+        ]);
     }
 
 
@@ -52,7 +57,7 @@ class OrdersController extends Controller
             'order_id' => $order->id
         ];
 
-        event(new OrderNotifyEvent($details, User::find(1)));
+        event(new OrderNotifyEvent($details));
 
         return json(__('Order created successfully!'));
     }

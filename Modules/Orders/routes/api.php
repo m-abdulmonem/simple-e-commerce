@@ -20,10 +20,10 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->name('api.')->group(function 
 
     Route::get("test", function (){
         $details = [
-            'title' => __('New order had been placed'),
-            'order_id' => 1
+            'title' => __('New order had been placed 1111'),
+            'order_id' =>1000
         ];
 
-        event(new  \Modules\Orders\app\Events\OrderNotifyEvent($details, auth()->user()));
+        event(new  \Modules\Orders\app\Events\OrderNotifyEvent($details));
     });
 });

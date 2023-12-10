@@ -30,10 +30,6 @@ class ProductsController extends Controller
      */
     public function show(Product $product): \Illuminate\Http\JsonResponse
     {
-//        $product->load([
-//            "carts" => fn($q) => $q->where('user_id', auth()->id())
-//        ]);
-
         return json(
             new ProductResource($product),
             message: __('Retrieve 10 Products')

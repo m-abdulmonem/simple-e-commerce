@@ -14,6 +14,9 @@ use Modules\Notifications\app\Resources\NotificationResource;
 class NotificationsController extends Controller
 {
 
+    /**
+     * @return AnonymousResourceCollection|JsonResponse
+     */
     public function __invoke(): AnonymousResourceCollection|JsonResponse
     {
         if (auth()->id() != 1){

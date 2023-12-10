@@ -95,7 +95,6 @@ class CartDatabaseService implements CartBaseService
     public function clear(): void
     {
         $cart = $this->getCart();
-        $cart->items()->delete();
         $cart->update([
             'status' => CartStatusEnum::Ordered->value
         ]);

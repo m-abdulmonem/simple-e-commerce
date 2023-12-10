@@ -25,7 +25,7 @@ class OrderNotifyListener
         Notification::create([
             'order_id' => $event->details->order_id,
             'title' => $event->details->title,
-            'content' => ['user_id' => $event->user->id],
+            'content' => ['user_id' => 1],
         ]);
     }
 }

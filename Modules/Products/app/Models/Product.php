@@ -20,21 +20,6 @@ class Product extends Model
         'image'
     ];
 
-    /**
-     * @author Mohamed Abdelmonem <mabdulalmonem@gmail.com>
-     *
-     * The cart method defines a "has many" relationship between the current model and the Cart model.
-     *
-     * This method is used to retrieve all carts that are associated with the current model.
-     * The relationship is defined through the "product_id" foreign key in the Cart model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany A "has many" relationship instance.
-     *
-     */
-    public function carts(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Cart::class, "product_id");
-    }
 
     /**
      *

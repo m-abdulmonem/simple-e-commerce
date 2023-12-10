@@ -11,6 +11,9 @@
 
     </head>
     <body class="antialiased">
-        <chat-clone></chat-clone>
+
+    <div id="app">
+        <App></App>
+    </div>
     </body>
 </html>
