@@ -10,9 +10,9 @@ Git (optional)
 Project Setup:
 
 Clone the Project:
-If you have the project URL, use git clone <[Repo Url](https://github.com/m-abdulmonem/simple-e-commerce.git)> to download the project.
-If you have the project downloaded as a ZIP file, extract it to your desired location.
-Install Dependencies:
+-If you have the project URL, use git clone <[Repo Url](https://github.com/m-abdulmonem/simple-e-commerce.git)> to download the project.
+-If you have the project downloaded as a ZIP file, extract it to your desired location.
+-Install Dependencies:
 Navigate to the project directory.
 Run composer install to install the Laravel dependencies.
 Run npm install to install the Vue and other frontend dependencies.
