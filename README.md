@@ -17,8 +17,8 @@ Navigate to the project directory.
 Run composer install to install the Laravel dependencies.
 Run npm install to install the Vue and other frontend dependencies.
 Configure Laravel Modules:
-Run php artisan module:discover to discover and register all modules.
-Run php artisan module:migrate to migrate the database for all modules.
+*Run php artisan module:discover to discover and register all modules.
+*Run php artisan module:migrate to migrate the database for all modules.
 Run php artisan module:seed to seed the database for all modules.
 Build the Frontend Assets:
 Run npm run dev to compile and watch for changes to the Vue components.
